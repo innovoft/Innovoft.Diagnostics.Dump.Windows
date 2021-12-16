@@ -11,7 +11,11 @@ namespace Innovoft.Diagnostics
 		#region Main
 		private static int Main(string[] args)
 		{
-			Dump.WriteThrow("dump.dmp", DumpType.WithFullMemory);
+			var wrote = Dump.Write("dump.dmp", DumpType.WithFullMemory);
+			if (!wrote)
+			{
+				Console.WriteLine("Could not write dump.dmp");
+			}
 			return 0;
 		}
 		#endregion //Main
