@@ -54,6 +54,25 @@ namespace Innovoft.Diagnostics
 			return MiniDumpWriteDump(process.Handle, process.Id, writer.SafeFileHandle, type, ref exceptionInfo, IntPtr.Zero, IntPtr.Zero);
 		}
 
+		public static bool Write(FileStream writer, Process process, DumpType type, out int error)
+		{
+			var exceptionInfo = new ExceptionInfo();
+			exceptionInfo.ThreadId = GetCurrentThreadId();
+			exceptionInfo.ExceptionPointers = Marshal.GetExceptionPointers();
+			exceptionInfo.ClientPointers = false;
+			var wrote = MiniDumpWriteDump(process.Handle, process.Id, writer.SafeFileHandle, type, ref exceptionInfo, IntPtr.Zero, IntPtr.Zero);
+			if (wrote)
+			{
+				error = default;
+				return true;
+			}
+			else
+			{
+				error = Marshal.GetHRForLastWin32Error();
+				return false;
+			}
+		}
+
 		[DllImport("kernel32.dll")]
 		private static extern uint GetCurrentThreadId();
 
