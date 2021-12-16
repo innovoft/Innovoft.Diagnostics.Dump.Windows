@@ -9,6 +9,10 @@ namespace Innovoft.Diagnostics
 {
 	public sealed class Dump
 	{
+		#region Constants
+		public const string Ext = "dmp";
+		#endregion //Constants
+
 		#region Methods
 		public static void Write(string path, DumpType type)
 		{
