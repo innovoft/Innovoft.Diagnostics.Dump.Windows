@@ -38,4 +38,10 @@
 		</ItemGroup>
 	</Target>
 
+	<ItemGroup>
+	  <Compile Remove="Innovoft.Diagnostics.Dump.Windows.Test.Console\**" />
+	  <EmbeddedResource Remove="Innovoft.Diagnostics.Dump.Windows.Test.Console\**" />
+	  <None Remove="Innovoft.Diagnostics.Dump.Windows.Test.Console\**" />
+	</ItemGroup>
+
 </Project>
