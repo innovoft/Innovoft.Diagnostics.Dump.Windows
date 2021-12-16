@@ -27,6 +27,15 @@ namespace Innovoft.Diagnostics
 			}
 		}
 
+		public static void WriteThrow(FileStream writer, Process process, DumpType type)
+		{
+			var wrote = Write(writer, process, type);
+			if (!wrote)
+			{
+				throw Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error());
+			}
+		}
+
 		public static bool Write(string path, DumpType type)
 		{
 			using (var writer = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))
