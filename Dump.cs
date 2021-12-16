@@ -14,28 +14,28 @@ namespace Innovoft.Diagnostics
 		#endregion //Constants
 
 		#region Methods
-		public static void WriteThrow(string path, DumpType type)
+		public static void WriteException(string path, DumpType type)
 		{
 			using (var writer = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))
 			using (var process = Process.GetCurrentProcess())
 			{
-				WriteThrow(writer, process, type);
+				WriteException(writer, process, type);
 			}
 		}
 
-		public static void WriteThrow(string path, Process process, DumpType type)
+		public static void WriteException(string path, Process process, DumpType type)
 		{
 			using (var writer = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))
 			{
-				WriteThrow(writer, process, type);
+				WriteException(writer, process, type);
 			}
 		}
 
-		public static void WriteThrow(FileStream writer, DumpType type)
+		public static void WriteException(FileStream writer, DumpType type)
 		{
 			using (var process = Process.GetCurrentProcess())
 			{
-				WriteThrow(writer, process, type);
+				WriteException(writer, process, type);
 			}
 		}
 
@@ -89,7 +89,7 @@ namespace Innovoft.Diagnostics
 			}
 		}
 
-		public static void WriteThrow(FileStream writer, Process process, DumpType type)
+		public static void WriteException(FileStream writer, Process process, DumpType type)
 		{
 			var exceptionInfo = new ExceptionInfo();
 			exceptionInfo.ThreadId = GetCurrentThreadId();
