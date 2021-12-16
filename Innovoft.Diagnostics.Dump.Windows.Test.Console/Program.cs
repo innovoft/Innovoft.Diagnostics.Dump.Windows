@@ -14,7 +14,7 @@ namespace Innovoft.Diagnostics
 			var wrote = Dump.Write("dump.dmp", DumpType.WithFullMemory, out var error);
 			if (!wrote)
 			{
-				Console.WriteLine("Could not write dump.dmp Error: {0:X}");
+				Console.WriteLine("Could not write dump.dmp Error: {0:X8}", error);
 			}
 			return 0;
 		}
