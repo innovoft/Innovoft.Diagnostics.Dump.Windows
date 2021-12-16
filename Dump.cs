@@ -64,28 +64,28 @@ namespace Innovoft.Diagnostics
 			}
 		}
 
-		public static bool Write(string path, DumpType type, out int error)
+		public static bool WriteError(string path, DumpType type, out int error)
 		{
 			using (var writer = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))
 			using (var process = Process.GetCurrentProcess())
 			{
-				return Write(writer, process, type, out error);
+				return WriteError(writer, process, type, out error);
 			}
 		}
 
-		public static bool Write(string path, Process process, DumpType type, out int error)
+		public static bool WriteError(string path, Process process, DumpType type, out int error)
 		{
 			using (var writer = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))
 			{
-				return Write(writer, process, type, out error);
+				return WriteError(writer, process, type, out error);
 			}
 		}
 
-		public static bool Write(FileStream writer, DumpType type, out int error)
+		public static bool WriteError(FileStream writer, DumpType type, out int error)
 		{
 			using (var process = Process.GetCurrentProcess())
 			{
-				return Write(writer, process, type, out error);
+				return WriteError(writer, process, type, out error);
 			}
 		}
 
@@ -111,7 +111,7 @@ namespace Innovoft.Diagnostics
 			return MiniDumpWriteDump(process.Handle, process.Id, writer.SafeFileHandle, type, ref exceptionInfo, IntPtr.Zero, IntPtr.Zero);
 		}
 
-		public static bool Write(FileStream writer, Process process, DumpType type, out int error)
+		public static bool WriteError(FileStream writer, Process process, DumpType type, out int error)
 		{
 			var exceptionInfo = new ExceptionInfo();
 			exceptionInfo.ThreadId = GetCurrentThreadId();
