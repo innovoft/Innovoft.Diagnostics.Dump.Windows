@@ -1,9 +1,41 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0</TargetFrameworks>
+		<Version>1.0.0</Version>
+		<PackageId>Innovoft.Diagnostics.Dump.Windows</PackageId>
+		<Title>Innovoft.Diagnostics.Dump.Windows</Title>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/innovoft/Innovoft.Diagnostics.Dump.Windows</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>dump dmp debug debugging</PackageTags>
+		<RootNamespace>Innovoft.Diagnostics</RootNamespace>
+		<Authors>Steven Retz</Authors>
+		<Company>Innovoft</Company>
+		<Copyright>Copyright © Innovoft 2021</Copyright>
+		<Description></Description>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+	</PropertyGroup>
+
+	<Target Name="SetSourceRevisionId" BeforeTargets="InitializeSourceControlInformation" Condition="$(SourceRevisionId) == ''">
+		<Exec Command="git rev-parse HEAD" ConsoleToMSBuild="True" IgnoreExitCode="False">
+			<Output PropertyName="SourceRevisionId" TaskParameter="ConsoleOutput" />
+		</Exec>
+	</Target>
+
+	<Target Name="RevisionAttribute" AfterTargets="InitializeSourceControlInformation" Condition="$(SourceRevisionId) != ''">
+		<ItemGroup>
+			<AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+				<_Parameter1>Revision</_Parameter1>
+				<_Parameter2>$(SourceRevisionId)</_Parameter2>
+			</AssemblyAttribute>
+		</ItemGroup>
+	</Target>
 
 </Project>
