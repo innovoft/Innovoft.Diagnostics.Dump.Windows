@@ -19,11 +19,7 @@ namespace Innovoft.Diagnostics
 			using (var writer = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))
 			using (var process = Process.GetCurrentProcess())
 			{
-				var exceptionInfo = new ExceptionInfo();
-				exceptionInfo.ThreadId = GetCurrentThreadId();
-				exceptionInfo.ExceptionPointers = Marshal.GetExceptionPointers();
-				exceptionInfo.ClientPointers = false;
-				var wrote = MiniDumpWriteDump(process.Handle, process.Id, writer.SafeFileHandle, type, ref exceptionInfo, IntPtr.Zero, IntPtr.Zero);
+				var wrote = Write(writer, process, type);
 				if (!wrote)
 				{
 					throw Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error());
@@ -36,11 +32,7 @@ namespace Innovoft.Diagnostics
 			using (var writer = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))
 			using (var process = Process.GetCurrentProcess())
 			{
-				var exceptionInfo = new ExceptionInfo();
-				exceptionInfo.ThreadId = GetCurrentThreadId();
-				exceptionInfo.ExceptionPointers = Marshal.GetExceptionPointers();
-				exceptionInfo.ClientPointers = false;
-				return MiniDumpWriteDump(process.Handle, process.Id, writer.SafeFileHandle, type, ref exceptionInfo, IntPtr.Zero, IntPtr.Zero);
+				return Write(writer, process, type);
 			}
 		}
 
