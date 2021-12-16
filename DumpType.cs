@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Innovoft.Diagnostics
 {
-	public enum DumpType
+    [Flags]
+    public enum DumpType
 	{
         Normal = 0x00000000,
         WithDataSegs = 0x00000001,
