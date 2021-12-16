@@ -77,6 +77,14 @@ namespace Innovoft.Diagnostics
 			}
 		}
 
+		public static bool Write(FileStream writer, DumpType type)
+		{
+			using (var process = Process.GetCurrentProcess())
+			{
+				return Write(writer, process, type);
+			}
+		}
+
 		public static bool Write(string path, DumpType type, out int error)
 		{
 			using (var writer = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))
