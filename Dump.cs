@@ -19,11 +19,7 @@ namespace Innovoft.Diagnostics
 			using (var writer = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))
 			using (var process = Process.GetCurrentProcess())
 			{
-				var wrote = Write(writer, process, type);
-				if (!wrote)
-				{
-					throw Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error());
-				}
+				WriteThrow(writer, process, type);
 			}
 		}
 
@@ -31,11 +27,7 @@ namespace Innovoft.Diagnostics
 		{
 			using (var writer = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))
 			{
-				var wrote = Write(writer, process, type);
-				if (!wrote)
-				{
-					throw Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error());
-				}
+				WriteThrow(writer, process, type);
 			}
 		}
 
@@ -43,20 +35,7 @@ namespace Innovoft.Diagnostics
 		{
 			using (var process = Process.GetCurrentProcess())
 			{
-				var wrote = Write(writer, process, type);
-				if (!wrote)
-				{
-					throw Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error());
-				}
-			}
-		}
-
-		public static void WriteThrow(FileStream writer, Process process, DumpType type)
-		{
-			var wrote = Write(writer, process, type);
-			if (!wrote)
-			{
-				throw Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error());
+				WriteThrow(writer, process, type);
 			}
 		}
 
@@ -107,6 +86,19 @@ namespace Innovoft.Diagnostics
 			using (var process = Process.GetCurrentProcess())
 			{
 				return Write(writer, process, type, out error);
+			}
+		}
+
+		public static void WriteThrow(FileStream writer, Process process, DumpType type)
+		{
+			var exceptionInfo = new ExceptionInfo();
+			exceptionInfo.ThreadId = GetCurrentThreadId();
+			exceptionInfo.ExceptionPointers = Marshal.GetExceptionPointers();
+			exceptionInfo.ClientPointers = false;
+			var wrote = MiniDumpWriteDump(process.Handle, process.Id, writer.SafeFileHandle, type, ref exceptionInfo, IntPtr.Zero, IntPtr.Zero);
+			if (!wrote)
+			{
+				throw Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error());
 			}
 		}
 
