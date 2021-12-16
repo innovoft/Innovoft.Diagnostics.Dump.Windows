@@ -14,7 +14,7 @@ namespace Innovoft.Diagnostics
 		#endregion //Constants
 
 		#region Methods
-		public static void Write(string path, DumpType type)
+		public static void WriteThrow(string path, DumpType type)
 		{
 			using (var writer = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))
 			using (var process = Process.GetCurrentProcess())

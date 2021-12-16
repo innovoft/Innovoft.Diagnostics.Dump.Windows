@@ -11,7 +11,7 @@ namespace Innovoft.Diagnostics
 		#region Main
 		private static int Main(string[] args)
 		{
-			Dump.Write("dump.dmp", DumpType.WithFullMemory);
+			Dump.WriteThrow("dump.dmp", DumpType.WithFullMemory);
 			return 0;
 		}
 		#endregion //Main
