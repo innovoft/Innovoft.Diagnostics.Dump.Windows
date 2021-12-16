@@ -10,6 +10,7 @@ namespace Innovoft.Diagnostics
 	{
 		public uint ThreadId;
 		public IntPtr ExceptionPointers;
-		public int ClientPointers;
+		[MarshalAs(UnmanagedType.Bool)]
+		public bool ClientPointers;
 	}
 }
